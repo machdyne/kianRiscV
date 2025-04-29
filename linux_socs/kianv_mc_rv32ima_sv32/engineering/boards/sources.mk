@@ -7,6 +7,7 @@ SRCS := ./pll.v \
         ../../qqspi.v \
         ../../clint.v \
         ../../spi.v \
+        ../../spi_nor_flash.v \
         ../../gpio.v \
         ../../cache.v \
         ../../icache.v \
