@@ -15,6 +15,7 @@ SRCS := ./pll.v \
         ../../pwm.v \
         ../../sdram/mt48lc16m16a2_ctrl.v \
         ../../sdram/w9864g6jt_ctrl.v \
+        ../../sdram/w9825g6kh_ctrl.v \
         ../../sdram/m12l64322a_ctrl.v \
         ../../kianv_harris_edition/kianv_harris_mc_edition.v \
         ../../kianv_harris_edition/control_unit.v  \

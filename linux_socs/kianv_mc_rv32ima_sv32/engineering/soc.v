@@ -51,6 +51,17 @@ module soc #(
     output wire        sdram_rasn,
     output wire        sdram_casn,
     inout  wire [15:0] sdram_dq,
+`elsif SOC_HAS_SDRAM_W9825G6KH
+    output wire        sdram_clk,
+    output wire        sdram_cke,
+    output wire [ 1:0] sdram_dqm,
+    output wire [12:0] sdram_addr,  //  A0-A10 row address, A0-A7 column address
+    output wire [ 1:0] sdram_ba,    // bank select A11,A12
+    output wire        sdram_csn,
+    output wire        sdram_wen,
+    output wire        sdram_rasn,
+    output wire        sdram_casn,
+    inout  wire [15:0] sdram_dq,
 `elsif SOC_HAS_SDRAM_M12L64322A
     output wire        sdram_clk,
     //    output wire        sdram_cke,
@@ -653,6 +664,35 @@ module soc #(
   );
 `elsif SOC_HAS_SDRAM_W9864G6JT
   w9864g6jt_ctrl #(
+    .SDRAM_CLK_FREQ(`SYSTEM_CLK / 1_000_000),
+    .TRP_NS         (`TRP_NS        ),
+    .TRC_NS         (`TRC_NS        ),
+    .TRCD_NS        (`TRCD_NS       ),
+    .TCH_NS         (`TCH_NS        ),
+    .CAS            (`CAS           )
+  ) sdram_i (
+      .clk   (clk),
+      .resetn(resetn),
+      .addr  (cache_addr_o),
+      .din   (cache_din_o),
+      .dout  (cache_dout_i),
+      .wmask (cache_wmask_o),
+      .valid (cache_valid_o),
+      .ready (cache_ready_i),
+
+      .sdram_clk (sdram_clk),
+      .sdram_cke (sdram_cke),
+      .sdram_dqm (sdram_dqm),
+      .sdram_addr(sdram_addr),
+      .sdram_ba  (sdram_ba),
+      .sdram_csn (sdram_csn),
+      .sdram_wen (sdram_wen),
+      .sdram_rasn(sdram_rasn),
+      .sdram_casn(sdram_casn),
+      .sdram_dq  (sdram_dq)
+  );
+`elsif SOC_HAS_SDRAM_W9825G6KH
+  w9825g6kh_ctrl  #(
     .SDRAM_CLK_FREQ(`SYSTEM_CLK / 1_000_000),
     .TRP_NS         (`TRP_NS        ),
     .TRC_NS         (`TRC_NS        ),
